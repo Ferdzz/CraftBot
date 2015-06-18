@@ -1,0 +1,12 @@
+0,0,0,minecraft,grass,0
+0,0,1,minecraft,air,0
+0,0,2,minecraft,air,0
+1,0,0,minecraft,air,0
+1,0,1,minecraft,air,0
+1,0,2,minecraft,air,0
+2,0,0,minecraft,air,0
+2,0,1,minecraft,dirt,0
+2,0,2,minecraft,air,0
+3,0,0,minecraft,air,0
+3,0,1,minecraft,air,0
+3,0,2,minecraft,air,0
