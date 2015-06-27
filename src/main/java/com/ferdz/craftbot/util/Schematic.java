@@ -12,7 +12,7 @@ public class Schematic {
 	public int offsetX;
 	public int offsetY;
 	public int offsetZ;
-	
+	//Contains every block x,y,z position
 	public Schematic(File file) {		
 		try {
 			blockPos = new ArrayList<BlockPos>();

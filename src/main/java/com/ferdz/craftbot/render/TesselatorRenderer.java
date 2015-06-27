@@ -22,6 +22,7 @@ public class TesselatorRenderer {
 	private static final double MAX = 1.05;
 	private static final double MIN = -0.05;
 	
+	//Renders a collection of ghost blocks at the marked positions, also taken from Craftbot, but adapted
 	public void render(double x, double y, double z, Pos... markerPos) {
 		
 		GL11.glBlendFunc(GL11.GL_DST_COLOR, GL11.GL_SRC_COLOR);
@@ -61,6 +62,7 @@ public class TesselatorRenderer {
 		GL11.glPopMatrix();
 	}
 	
+	//Renders a single ghost block
 	private void renderMarker(Pos m, int x, int y, int z) {
 		final Tessellator tessellator = Tessellator.instance;
 		tessellator.addVertex(m.x + x + MIN, m.y + y + MAX, m.z + z + MIN);
@@ -94,11 +96,7 @@ public class TesselatorRenderer {
 		tessellator.addVertex(m.x + x + MAX, m.y + y + MIN, m.z + z + MAX);
 	}
 	
-	/**
-	 * Draws the position markers.
-	 * 
-	 * @param event
-	 */
+	//Event called on render, where we render the ghost structure if the bot is enabled
 	@SubscribeEvent
 	public void drawMarkers(RenderWorldLastEvent event) {
 		if (CraftBot.bot && CraftBot.currentSchematic != null && CraftBot.currentSchematic.blockPos != null) {
@@ -112,6 +110,7 @@ public class TesselatorRenderer {
 		}
 	}
 	
+	//Transforms an ArrayList<BlockPos> to BlockPos[], also removes air blocks so that they do not obstruct the ghost view
 	public BlockPos[] toArray(ArrayList<BlockPos> list) {
 		BlockPos[] pos = new BlockPos[list.size()];
 		for (int i = 0; i < pos.length; i++) {

@@ -24,10 +24,11 @@ public class CraftBot {
 	public static final String MODID = "CraftBot";
 	public static final String VERSION = "0.1";
 
+	//The directory where the schematics files will be saved
 	public static File dir;
-	
+	//If the bot is enabled or not
 	public static boolean bot = false;
-	
+	//The currently loaded schematic
 	public static Schematic currentSchematic;
 	
 	@Instance
@@ -37,6 +38,7 @@ public class CraftBot {
 	public void init(FMLInitializationEvent event) {
 		System.out.println("Started loading " + MODID + " version " + VERSION);
 		
+		//If the dir does not exist (first launch), create it
 		dir = new File("mods/CraftBot");
 		if(!dir.exists())
 			dir.mkdir();

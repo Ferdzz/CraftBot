@@ -6,7 +6,7 @@ public class BlockPos extends Pos {
 
 	public Block block;
 	public int metadata;
-	
+	//Simple class only containing the block and the metadata
 	public BlockPos(int x, int y, int z, Block block, int meta) {
 		super(x, y, z);
 		this.block = block;

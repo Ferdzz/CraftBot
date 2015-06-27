@@ -16,17 +16,18 @@ public class PlayerHandler {
 	public void livingUpdate(LivingUpdateEvent event) {
 		if (event.entityLiving instanceof EntityPlayer) {
 			if (event.entityLiving.equals(Minecraft.getMinecraft().thePlayer)) {
-				if (CraftBot.bot) {
-					
+				if (CraftBot.bot) {					
+					//This is not used, but it could be usefull. This method is called on each living tick of the player, so if you want to handle the bot, it would be here.
 				}
 			}
 		}
 	}
 	
+	//Forces the player to look under and place a block
 	public void placeBlockUnder(EntityPlayer player) {
-		player.rotationPitch = 91;
+		player.rotationPitch = 91; // Looking down
 		if (player.onGround)
-			player.jump();
-		ForcePlayer.forcePlaceBlock(player);
+			player.jump(); //Jumping
+		ForcePlayer.forcePlaceBlock(player); //Placing
 	}
 }

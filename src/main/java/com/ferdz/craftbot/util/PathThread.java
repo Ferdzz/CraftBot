@@ -2,8 +2,6 @@ package com.ferdz.craftbot.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.PathPoint;
@@ -15,6 +13,7 @@ public class PathThread extends Thread {
 		this.command = command;
 	}
 	
+	//**This is purely for testing, I was trying things out and was never able to finish it
 	@Override
 	public void run() {
 		PathFinder pathFinder = new PathFinder(command.getEntityWorld(), false, true, true, true);
@@ -26,7 +25,6 @@ public class PathThread extends Thread {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

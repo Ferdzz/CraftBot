@@ -7,20 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.pathfinding.PathEntity;
-import net.minecraft.pathfinding.PathFinder;
-import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.MovementInput;
 
 import org.lwjgl.util.vector.Vector3f;
 
 import com.ferdz.craftbot.CraftBot;
-import com.ferdz.craftbot.player.ForcePlayer;
 import com.ferdz.craftbot.util.PathThread;
 import com.ferdz.craftbot.util.Schematic;
 
@@ -40,43 +34,51 @@ public class CBCommand implements ICommand {
 		
 		// Actual command
 		EntityPlayer player = (EntityPlayer) command;
-		if (arg[0].equalsIgnoreCase("pos1")) {
+		if (arg[0].equalsIgnoreCase("pos1")) { // Sets the first position
 			player.getEntityData().setInteger("CBpos1X", (int) player.posX);
 			player.getEntityData().setInteger("CBpos1Y", (int) (player.posY - player.getYOffset()));
 			player.getEntityData().setInteger("CBpos1Z", (int) player.posZ);
 			player.getEntityData().setBoolean("CBhaspos1", true);
-		} else if (arg[0].equalsIgnoreCase("pos2")) {
+		} else if (arg[0].equalsIgnoreCase("pos2")) { // Sets the second position
 			player.getEntityData().setInteger("CBpos2X", (int) player.posX);
 			player.getEntityData().setInteger("CBpos2Y", (int) (player.posY - player.getYOffset()));
 			player.getEntityData().setInteger("CBpos2Z", (int) player.posZ);
 			player.getEntityData().setBoolean("CBhaspos2", true);
-		} else if (arg[0].equalsIgnoreCase("save")) {
+		} else if (arg[0].equalsIgnoreCase("save")) { // Saving the schematic
 			if (!player.getEntityData().getBoolean("CBhaspos1") || !player.getEntityData().getBoolean("CBhaspos2")) {
 				command.addChatMessage(new ChatComponentText("Please set pos1 and pos2 first"));
 				return;
 			}
-			if (arg.length == 2)
+			if (arg.length == 2) // save the file
 				save(new Vector3f(player.getEntityData().getInteger("CBpos1X"), player.getEntityData().getInteger("CBpos1Y"), player.getEntityData().getInteger("CBpos1Z")), new Vector3f(player.getEntityData().getInteger("CBpos2X"), player.getEntityData().getInteger("CBpos2Y"), player.getEntityData().getInteger("CBpos2Z")), arg[1], command);
 			else
+				// If there is no argument for the name
 				command.addChatMessage(new ChatComponentText("Usage: /craftbot save <file>"));
 		} else if (arg[0].equalsIgnoreCase("place")) {
-			if (arg.length == 2)
-				place(new Vector3f((int) player.posX, (int) (player.posY - player.getYOffset()), (int) player.posZ), arg[1], command);
+			if (arg.length == 2) // **Does not actually place the file, just spawns a schematic 'ghost preview'**
+				place(arg[1]);
 			else
+				// If there is no argument for the name
 				command.addChatMessage(new ChatComponentText("Usage: /craftbot place <file>"));
-		} else if (arg[0].equalsIgnoreCase("togglebot")) {
+		} else if (arg[0].equalsIgnoreCase("togglebot")) { // Also available through the keybind
 			CraftBot.bot = !CraftBot.bot;
-		} else if(arg[0].equalsIgnoreCase("path")) {
+		} else if (arg[0].equalsIgnoreCase("path")) { // **Not finished, used for testing**
 			new PathThread(command).start();
 		} else {
 			command.addChatMessage(new ChatComponentText("Command not recognized"));
 		}
 	}
 	
-	private void place(Vector3f pos, String name, ICommandSender command) {
+	// Loads the schematic, if the bot is on, the ghost preview will appear
+	private void place(String name) {
 		CraftBot.currentSchematic = new Schematic(new File("mods/CraftBot/" + name + ".txt"));
 	}
 	
+	// Saves the schematics under this format:
+	// x,y,z,modid,block,metadata
+	// Where x,y,z are relative positions to the player
+	// For example:
+	// 10,0,5,minecraft,stone,0
 	private void save(Vector3f pos1, Vector3f pos2, String name, ICommandSender command) {
 		Vector3f min = new Vector3f(Math.min(pos1.x, pos2.x), Math.min(pos1.y, pos2.y), Math.min(pos1.z, pos2.z));
 		Vector3f max = new Vector3f(Math.max(pos1.x, pos2.x), Math.max(pos1.y, pos2.y), Math.max(pos1.z, pos2.z));

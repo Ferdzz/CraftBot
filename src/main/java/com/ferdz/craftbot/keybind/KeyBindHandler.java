@@ -8,6 +8,7 @@ import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class KeyBindHandler {
 	
+	//Toggle the bot status
 	@SubscribeEvent
 	public void onKeyEvent(KeyInputEvent event) {
 		
